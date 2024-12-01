@@ -25,6 +25,9 @@ function processFile(filePath) {
 
         const totalDistance = calculateTotalDistance(leftList, rightList);
         console.log("Total Distance:", totalDistance);
+
+        const similarityScore = calculateSimilarityScore(leftList, rightList);
+        console.log("Total Similarity Score:", similarityScore);
     });
 }
 
@@ -39,6 +42,27 @@ function calculateTotalDistance(leftList, rightList) {
     }
 
     return totalDistance;
+}
+
+function calculateSimilarityScore(leftList, rightList) {
+    let frequencyMap = {}; 
+
+    for (let i = 0; i < rightList.length; i++) {
+        let num = rightList[i]; 
+        if (frequencyMap[num]) {
+            frequencyMap[num] += 1;
+        } else {
+            frequencyMap[num] = 1; 
+        }
+    }
+    
+    let similarityScore = 0;
+    leftList.forEach(num => {
+        const frequency = frequencyMap[num] || 0;
+        similarityScore += num * frequency;
+    });
+
+    return similarityScore;
 }
 
 processFile('data.txt');
